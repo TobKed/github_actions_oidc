@@ -8,7 +8,7 @@ GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
 **Table of Contents**
 
 - [Instructions](#instructions)
-- [Links:](#links)
+- [Links](#links)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -108,7 +108,7 @@ GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
       --member="principalSet://iam.googleapis.com/${WORKLOAD_IDENTITY_POOL_ID}/*"
     ```
 
-## Links:
+## Links
 
  - [The GitHub Blog: GitHub Actions: Secure cloud deployments with OpenID Connect](https://github.blog/changelog/2021-10-27-github-actions-secure-cloud-deployments-with-openid-connect/)
  - [GitHub Docs - About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
