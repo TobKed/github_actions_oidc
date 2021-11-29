@@ -1,4 +1,4 @@
-name: List Compute Engine instances in GCP
+name: GCP example workflow
 
 on:
   workflow_dispatch:
@@ -13,6 +13,10 @@ env:
   GCP_SERVICE_ACCOUNT: "my-service-account@ga-oidc-test-bis.iam.gserviceaccount.com"
   GCP_IDENTITY_POOL: "github-actions-pool"
   GCP_IDENTITY_POOL_PROVIDER: "github-actions-pool-provider"
+
+
+
+
 
 permissions:
   id-token: write

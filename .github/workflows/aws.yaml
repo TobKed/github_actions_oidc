@@ -1,0 +1,34 @@
+name: AWS example workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+  push:
+    branches:
+      - master
+
+env:
+  AWS_BUCKET_NAME : "ga-oidc-test"
+  AWS_REGION : "us-east-1"
+
+permissions:
+  id-token: write
+  contents: write  # This is required for actions/checkout@v2
+
+jobs:
+  S3PUpload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.6.0
+        with:
+          role-to-assume: arn:aws:iam::1234567890:role/example-role
+          role-session-name: samplerolesession
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Copy README.md to s3
+        run: |
+          aws s3 cp ./README.md s3://${{ env.AWS_BUCKET_NAME }}/
