@@ -8,6 +8,7 @@ GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
 **Table of Contents**
 
 - [GCP Instructions](#gcp-instructions)
+- [AWS Instructions](#aws-instructions)
 - [Links](#links)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -108,6 +109,53 @@ GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
       --member="principalSet://iam.googleapis.com/${WORKLOAD_IDENTITY_POOL_ID}/*"
     ```
 
+## AWS Instructions
+
+1. Exports
+
+   ```sh
+   export REGION=us-east-1
+
+   export ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
+
+   aws configure set region "${REGION}"
+   ```
+
+1. OpenID Connect Identity Provider [IdP] thumbprint:
+
+   ```sh
+     openssl s_client -connect token.actions.githubusercontent.com:443 -showcerts 2>/dev/null \
+   export OIDC_IDP_THUMBPRINT=$(
+     echo 1 | \
+     openssl s_client -servername token.actions.githubusercontent.com -showcerts -connect token.actions.githubusercontent.com:443 2>/dev/null \
+     | sed -n '/BEGIN\ CERTIFICATE/,/END\ CERTIFICATE/ p' \
+     | sed -n '/END CERTIFICATE/,$ p' \
+     | tail -n +2 \
+     | openssl x509 -fingerprint -noout \
+     | sed -e 's/^SHA1\ Fingerprint=//' | \
+     sed -e 's/://g'
+   )
+   ```
+
+   Based on [AWS - Obtaining the thumbprint for an OpenID Connect Identity Provider](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc_verify-thumbprint.html)
+
+1. IAM OIDC Identity Provider:
+
+   ```sh
+   aws iam create-open-id-connect-provider \
+     --url "https://token.actions.githubusercontent.com" \
+     --client-id-list "sts.amazonaws.com" \
+     --thumbprint-list "${OIDC_IDP_THUMBPRINT}"
+   ```
+
+1. IAM Role and Policy:
+
+   ```sh
+   export POLICY_ARN=$(aws iam create-policy --policy-name S3Access --policy-document file://aws_bucket_policy.json | jq -r '.Policy.Arn')
+   aws iam create-role --role-name RoleForGitHubActions --assume-role-policy-document file://aws_role_for_ga.json
+   aws iam attach-role-policy --role-name RoleForGitHubActions --policy-arn "${POLICY_ARN}"
+   ```
+
 ## Links
 
  - [The GitHub Blog: GitHub Actions: Secure cloud deployments with OpenID Connect](https://github.blog/changelog/2021-10-27-github-actions-secure-cloud-deployments-with-openid-connect/)
@@ -120,6 +168,7 @@ GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
    - [`google-github-actions/auth` - Setting up Workload Identity Federation](https://github.com/google-github-actions/auth/tree/v0.4.0#setting-up-workload-identity-federation)
    - [Google Cloud Console - Workload Identity Pools ](https://console.cloud.google.com/iam-admin/workload-identity-pools)
  - AWS:
-   - []()
-   - []()
-   - []()
+   - [GitHub Docs - Configuring OpenID Connect in Amazon Web Services](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
+   - [AWS - Creating OpenID Connect (OIDC) identity providers](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html)
+   - [AWS - Creating a role for web identity or OpenID connect federation (console) ](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-idp_oidc.html)
+   - [AWS - Obtaining the thumbprint for an OpenID Connect Identity Provider](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc_verify-thumbprint.html)
