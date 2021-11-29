@@ -1,7 +1,12 @@
-# Example of GitHub Actions workflow with OIDC authentication to Google Cloud Platform
+# Example of GitHub Actions workflow with OpenID Connect authentication to Google Cloud Platform and Amazon Web Services
 
-Easy to follow shell commands to set up Google Cloud Platform [GCP] resources working with simple
-GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
+Easy to follow shell commands to set up Google Cloud Platform [GCP] or Amazone Web Services [AWS]
+resources working with simple GitHub Actions [GA] workflow using OpenID Connect [OIDC] to authenticate.
+
+The OIDC gives more granular control over authentication, authorization and credentials rotation.
+Any long-lived credentials are also do not have be stored as GitHub Secrets.
+
+Read more on [GitHub Docs - About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -14,6 +19,11 @@ GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## GCP Instructions
+
+1. Prerequisites:
+
+   - installed and configured [`gcloud` cli](https://cloud.google.com/sdk/gcloud/).
+   - edited file [`.github/workflows/gcp.yaml`](.github/workflows/gcp.yaml) for your project
 
 1. Exports
 
@@ -111,10 +121,19 @@ GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
 
 ## AWS Instructions
 
+1. Prerequisites:
+
+   - installed and configured [`aws cli`](https://aws.amazon.com/cli/)
+   - example workflow copies README.md to s3 bucket, you may need one
+   - edited files [`.github/workflows/aws.yaml`](.github/workflows/aws.yaml),
+     [`aws_bucket_policy.json`](aws_bucket_policy.json) and [`aws_role_for_ga.json`](aws_role_for_ga.json)
+     for your project
+
 1. Exports
 
    ```sh
    export REGION=us-east-1
+   export ROLE_NAME=RoleForGitHubActions
 
    export ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
 
@@ -124,7 +143,6 @@ GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
 1. OpenID Connect Identity Provider [IdP] thumbprint:
 
    ```sh
-     openssl s_client -connect token.actions.githubusercontent.com:443 -showcerts 2>/dev/null \
    export OIDC_IDP_THUMBPRINT=$(
      echo 1 | \
      openssl s_client -servername token.actions.githubusercontent.com -showcerts -connect token.actions.githubusercontent.com:443 2>/dev/null \
@@ -151,9 +169,9 @@ GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
 1. IAM Role and Policy:
 
    ```sh
-   export POLICY_ARN=$(aws iam create-policy --policy-name S3Access --policy-document file://aws_bucket_policy.json | jq -r '.Policy.Arn')
-   aws iam create-role --role-name RoleForGitHubActions --assume-role-policy-document file://aws_role_for_ga.json
-   aws iam attach-role-policy --role-name RoleForGitHubActions --policy-arn "${POLICY_ARN}"
+   export POLICY_ARN=$(aws iam create-policy --policy-name S3Access --policy-document file://aws_bucket_policy.json --query "Policy.Arn" --output text)
+   aws iam create-role --role-name "${ROLE_NAME}" --assume-role-policy-document file://aws_role_for_ga.json
+   aws iam attach-role-policy --role-name "${ROLE_NAME}" --policy-arn "${POLICY_ARN}"
    ```
 
 ## Links
