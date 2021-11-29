@@ -1,11 +1,11 @@
-name: List services in GCP
+name: List Compute Engine instances in GCP
 
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:
     inputs:
+  #  push:
+  #    branches:
+  #      - master
 
 env:
   GCP_PROJECT_ID: "ga-oidc-test-bis"

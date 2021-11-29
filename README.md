@@ -7,12 +7,12 @@ GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [Instructions](#instructions)
+- [GCP Instructions](#gcp-instructions)
 - [Links](#links)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Instructions
+## GCP Instructions
 
 1. Exports
 
@@ -112,9 +112,14 @@ GitHub Actions [GA] workflow using OIDC to authenticate to GCP.
 
  - [The GitHub Blog: GitHub Actions: Secure cloud deployments with OpenID Connect](https://github.blog/changelog/2021-10-27-github-actions-secure-cloud-deployments-with-openid-connect/)
  - [GitHub Docs - About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
- - [GitHub Docs - Configuring OpenID Connect in Google Cloud Platform](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-google-cloud-platform)
- - [Google Cloud - Workload identity federation](https://cloud.google.com/iam/docs/workload-identity-federation)
- - [Google Cloud - Configuring workload identity federation](https://cloud.google.com/iam/docs/configuring-workload-identity-federation#github-actions_2)
- - [`google-github-actions/auth` - Authenticating via Workload Identity Federation](https://github.com/google-github-actions/auth#authenticating-via-workload-identity-federation-1)
- - [`google-github-actions/auth` - Setting up Workload Identity Federation](https://github.com/google-github-actions/auth/tree/v0.4.0#setting-up-workload-identity-federation)
- - [Google Cloud Console - Workload Identity Pools ](https://console.cloud.google.com/iam-admin/workload-identity-pools)
+ - GCP:
+   - [GitHub Docs - Configuring OpenID Connect in Google Cloud Platform](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-google-cloud-platform)
+   - [Google Cloud - Workload identity federation](https://cloud.google.com/iam/docs/workload-identity-federation)
+   - [Google Cloud - Configuring workload identity federation](https://cloud.google.com/iam/docs/configuring-workload-identity-federation#github-actions_2)
+   - [`google-github-actions/auth` - Authenticating via Workload Identity Federation](https://github.com/google-github-actions/auth#authenticating-via-workload-identity-federation-1)
+   - [`google-github-actions/auth` - Setting up Workload Identity Federation](https://github.com/google-github-actions/auth/tree/v0.4.0#setting-up-workload-identity-federation)
+   - [Google Cloud Console - Workload Identity Pools ](https://console.cloud.google.com/iam-admin/workload-identity-pools)
+ - AWS:
+   - []()
+   - []()
+   - []()
