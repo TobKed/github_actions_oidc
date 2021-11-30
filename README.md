@@ -126,7 +126,8 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
 1. Prerequisites:
 
    - installed and configured [`aws cli`](https://aws.amazon.com/cli/)
-   - example workflow copies README.md to s3 bucket, you may need one
+   - installed  openssl
+   - example workflow copies `README.md` to s3 bucket, you may need one
    - edited files [`.github/workflows/aws.yaml`](.github/workflows/aws.yaml),
      [`aws_bucket_policy.json`](aws_bucket_policy.json) and [`aws_role_for_ga.json`](aws_role_for_ga.json)
      for your project
