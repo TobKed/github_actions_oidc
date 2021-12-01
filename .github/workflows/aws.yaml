@@ -10,8 +10,7 @@ on:
 env:
   AWS_BUCKET_NAME : "ga-oidc-test"
   AWS_REGION : "us-east-1"
-  AWS_ACCOUNT_ID: "643022902296"
-  AWS_ROLE: "RoleForGitHubActions"
+  AWS_ROLE_ARN: "arn:aws:iam::643022902296:role/RoleForGitHubActions"
 
 permissions:
   id-token: write
@@ -28,7 +27,7 @@ jobs:
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1.6.0
         with:
-          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_ROLE }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
       - name: Copy README.md to s3

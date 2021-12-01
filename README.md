@@ -173,9 +173,11 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
 
    ```sh
    export POLICY_ARN=$(aws iam create-policy --policy-name S3Access --policy-document file://aws_bucket_policy.json --query "Policy.Arn" --output text)
-   aws iam create-role --role-name "${ROLE_NAME}" --assume-role-policy-document file://aws_role_for_ga.json
+   export ROLE_ARN=$(aws iam create-role --role-name "${ROLE_NAME}" --assume-role-policy-document file://aws_role_for_ga.json --query "Role.Arn" --output text)
    aws iam attach-role-policy --role-name "${ROLE_NAME}" --policy-arn "${POLICY_ARN}"
    ```
+
+   The value for `AWS_ROLE_ARN` environment variable for AWS GA workflow is available under `ROLE_ARN` variable.
 
 ## Links
 
