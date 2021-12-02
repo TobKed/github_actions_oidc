@@ -3,9 +3,9 @@ name: GCP example workflow
 on:
   workflow_dispatch:
     inputs:
-    push:
-      branches:
-        - master
+  push:
+    branches:
+      - master
 
 env:
   GCP_PROJECT_ID: "ga-oidc-test-bis"
