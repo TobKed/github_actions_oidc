@@ -2,11 +2,11 @@
 
 [![pre-commit](https://github.com/TobKed/github_actions_oidc/actions/workflows/ci.yaml/badge.svg)](https://github.com/TobKed/github_actions_oidc/actions/workflows/ci.yaml)
 
-Easy to follow shell commands to set up Google Cloud Platform [GCP] or Amazone Web Services [AWS]
+Easy to follow shell commands to set up Google Cloud Platform [GCP] and Amazon Web Services [AWS]
 resources working with simple GitHub Actions [GA] workflow using OpenID Connect [OIDC] to authenticate.
 
 The OIDC gives more granular control over authentication, authorization and credentials rotation.
-Any long-lived credentials are also do not have be stored as GitHub Secrets.
+Any long-lived credentials also do not have to be stored as GitHub Secrets.
 
 Read more on [GitHub Docs - About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
 
@@ -43,7 +43,7 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
       --format="value(projectNumber)" \
       --filter="projectId=${PROJECT_ID}")
    ```
-1. Service Account:
+1. Create Service Account:
 
     ```sh
     gcloud iam service-accounts create "${SERVICE_ACCOUNT_NAME}" \
@@ -55,7 +55,7 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
     gcloud services enable iamcredentials.googleapis.com \
       --project "${PROJECT_ID}"
     ```
-1. Example of enabling resources API and IAM access (required for listing Google Cloud Compute [GCE] instances in GA workflow)
+1. An example of enabling resources API and IAM access (required for listing Google Cloud Compute [GCE] instances in GA workflow):
 
     ```sh
     gcloud services enable compute.googleapis.com \
@@ -65,7 +65,7 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
       --role=roles/compute.viewer
     ```
 
-1. Create workload identity pool and provider:
+1. Create the workload identity pool and provider:
 
     ```sh
     gcloud iam workload-identity-pools create "${WORKLOAD_IDENTITY_POOL}" \
@@ -87,9 +87,9 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
       --issuer-uri="https://token.actions.githubusercontent.com"
     ```
 
-    Not all attributes from `--attribute-mapping` are used and may be deleted, added more to show possiblities.
+    Not all attributes from `--attribute-mapping` parameter are used and may be adjusted. Just added more to show possibilities.
 
-1. Example of attribute condition for additional security (`--attribute-condition` argument may be used in previous step as well):
+1. An example of attribute condition for additional security (`--attribute-condition` argument may be used in the previous step as well):
 
     ```sh
     gcloud iam workload-identity-pools providers update-oidc "${WORKLOAD_IDENTITY_POOL_PROVIDER}" \
@@ -99,7 +99,7 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
       --attribute-condition="(assertion.sub=='repo:${REPOSITORY}:ref:refs/heads/master')"
     ```
 
-    Filters workflow only to `master` branch.
+    It filters workflow only to the `master` branch.
 
 1. Allow Service Account authentication:
 
@@ -143,7 +143,7 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
    aws configure set region "${REGION}"
    ```
 
-1. OpenID Connect Identity Provider [IdP] thumbprint:
+1. Get OpenID Connect Identity Provider [IdP] thumbprint:
 
    ```sh
    export OIDC_IDP_THUMBPRINT=$(
@@ -160,7 +160,7 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
 
    Based on [AWS - Obtaining the thumbprint for an OpenID Connect Identity Provider](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc_verify-thumbprint.html)
 
-1. IAM OIDC Identity Provider:
+1. Create IAM OIDC Identity Provider:
 
    ```sh
    aws iam create-open-id-connect-provider \
@@ -169,7 +169,7 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
      --thumbprint-list "${OIDC_IDP_THUMBPRINT}"
    ```
 
-1. IAM Role and Policy:
+1. Create IAM Role and Policy:
 
    ```sh
    export POLICY_ARN=$(aws iam create-policy --policy-name S3Access --policy-document file://aws_bucket_policy.json --query "Policy.Arn" --output text)
