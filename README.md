@@ -1,6 +1,8 @@
 # Example of GitHub Actions workflow with OpenID Connect authentication to Google Cloud Platform and Amazon Web Services
 
 [![pre-commit](https://github.com/TobKed/github_actions_oidc/actions/workflows/ci.yaml/badge.svg)](https://github.com/TobKed/github_actions_oidc/actions/workflows/ci.yaml)
+[![GCP example workflow](https://github.com/TobKed/github_actions_oidc/actions/workflows/gcp.yaml/badge.svg)](https://github.com/TobKed/github_actions_oidc/actions/workflows/gcp.yaml)
+[![AWS example workflow](https://github.com/TobKed/github_actions_oidc/actions/workflows/aws.yaml/badge.svg)](https://github.com/TobKed/github_actions_oidc/actions/workflows/aws.yaml)
 
 Easy to follow shell commands to set up Google Cloud Platform [GCP] and Amazon Web Services [AWS]
 resources working with simple GitHub Actions [GA] workflow using OpenID Connect [OIDC] to authenticate.
