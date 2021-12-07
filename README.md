@@ -16,11 +16,29 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [GitHub Actions permissions](#github-actions-permissions)
 - [GCP Instructions](#gcp-instructions)
 - [AWS Instructions](#aws-instructions)
 - [Links](#links)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## GitHub Actions permissions
+
+When you use OIDC in GA workflows remember to grand `id-token: write` permission.
+
+```yaml
+permissions:
+  id-token: write
+```
+
+It can be set on top-level or for specific jobs.
+Important: if you specify the access for any of permssiion scopes, all of those that are not specified are set to none.
+
+Read more about permissions:
+
+ - [Permissions for the ``GITHUB_TOKEN``](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token)
+ - [Workflow syntax fot GitHub Actions - permissions](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#permissions)
 
 ## GCP Instructions
 
