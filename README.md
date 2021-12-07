@@ -5,7 +5,7 @@
 [![AWS example workflow](https://github.com/TobKed/github_actions_oidc/actions/workflows/aws.yaml/badge.svg)](https://github.com/TobKed/github_actions_oidc/actions/workflows/aws.yaml)
 
 Easy to follow shell commands to set up Google Cloud Platform [GCP] and Amazon Web Services [AWS]
-resources working with simple GitHub Actions [GA] workflow using OpenID Connect [OIDC] to authenticate.
+resources working with simple GitHub Actions [GA] workflows using OpenID Connect [OIDC] to authenticate.
 
 The OIDC gives more granular control over authentication, authorization and credentials rotation.
 Any long-lived credentials also do not have to be stored as GitHub Secrets.
@@ -16,11 +16,37 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [GitHub Actions](#github-actions)
+    - [Permissions](#permissions)
 - [GCP Instructions](#gcp-instructions)
 - [AWS Instructions](#aws-instructions)
 - [Links](#links)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## GitHub Actions
+
+Examples:
+
+- AWS - [.github/workflows/aws.yaml](.github/workflows/aws.yaml)
+- GCP - [.github/workflows/gcp.yaml](.github/workflows/gcp.yaml)
+
+#### Permissions
+
+When you use OIDC in GA workflows remember to grand `id-token: write` permission.
+
+```yaml
+permissions:
+  id-token: write
+```
+
+It can be set on top-level or for specific jobs.
+Important: if you specify the access for any of permssiion scopes, all of those that are not specified are set to none.
+
+Read more about permissions:
+
+ - [Permissions for the ``GITHUB_TOKEN``](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token)
+ - [Workflow syntax fot GitHub Actions - permissions](https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#permissions)
 
 ## GCP Instructions
 
