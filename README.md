@@ -137,12 +137,9 @@ Read more on [GitHub Docs - About security hardening with OpenID Connect](https:
 1. Exports
 
    ```sh
-   export REGION=us-east-1
    export ROLE_NAME=RoleForGitHubActions
 
    export ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
-
-   aws configure set region "${REGION}"
    ```
 
 1. Get OpenID Connect Identity Provider [IdP] thumbprint:
