@@ -41,7 +41,7 @@ permissions:
 ```
 
 It can be set on top-level or for specific jobs.
-Important: if you specify the access for any of permssiion scopes, all of those that are not specified are set to none.
+Important: if you specify the access for any of permission scopes, all of those that are not specified are set to none.
 
 Read more about permissions:
 
