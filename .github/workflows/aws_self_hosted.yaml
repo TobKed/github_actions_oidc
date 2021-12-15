@@ -1,0 +1,35 @@
+name: AWS example workflow - self-hosted
+
+on:
+  workflow_dispatch:
+    inputs:
+  push:
+    branches:
+      - master
+
+env:
+  AWS_BUCKET_NAME : "ga-oidc-test"
+  AWS_REGION : "us-east-1"
+  AWS_ROLE_ARN: "arn:aws:iam::643022902296:role/RoleForGitHubActions"
+
+permissions:
+  id-token: write
+  contents: write  # This is required for actions/checkout@v2
+
+jobs:
+  S3PUpload:
+    runs-on: [self-hosted]
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.6.0
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-session-name: samplerolesession
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Copy README.md to s3
+        run: |
+          aws s3 cp ./README.md s3://${{ env.AWS_BUCKET_NAME }}/
