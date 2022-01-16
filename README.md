@@ -168,22 +168,15 @@ Read more about permissions:
    export ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
    ```
 
-1. Get OpenID Connect Identity Provider [IdP] thumbprint:
+1. Set OpenID Connect Identity Provider [IdP] thumbprint:
 
    ```sh
-   export OIDC_IDP_THUMBPRINT=$(
-     echo 1 | \
-     openssl s_client -servername token.actions.githubusercontent.com -showcerts -connect token.actions.githubusercontent.com:443 2>/dev/null \
-     | sed -n '/BEGIN\ CERTIFICATE/,/END\ CERTIFICATE/ p' \
-     | sed -n '/END CERTIFICATE/,$ p' \
-     | tail -n +2 \
-     | openssl x509 -fingerprint -noout \
-     | sed -e 's/^SHA1\ Fingerprint=//' | \
-     sed -e 's/://g'
-   )
+   export OIDC_IDP_THUMBPRINT=6938fd4d98bab03faadb97b34396831e3780aea1
    ```
 
-   Based on [AWS - Obtaining the thumbprint for an OpenID Connect Identity Provider](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc_verify-thumbprint.html)
+   **Update 2022-01-16:** GitHub (accidentally) [changed their thumbprint](https://github.blog/changelog/2022-01-13-github-actions-update-on-oidc-based-deployments-to-aws/) and the value has been updated.
+
+   See also [AWS - Obtaining the thumbprint for an OpenID Connect Identity Provider](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc_verify-thumbprint.html)
 
 1. Create IAM OIDC Identity Provider:
 
