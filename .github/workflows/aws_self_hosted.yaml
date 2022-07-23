@@ -8,8 +8,8 @@ on:
       - master
 
 env:
-  AWS_BUCKET_NAME : "ga-oidc-test"
-  AWS_REGION : "us-east-1"
+  AWS_BUCKET_NAME: "ga-oidc-test"
+  AWS_REGION: "us-east-1"
   AWS_ROLE_ARN: "arn:aws:iam::643022902296:role/RoleForGitHubActions"
 
 permissions:
