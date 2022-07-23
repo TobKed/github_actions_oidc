@@ -1,19 +1,19 @@
 {
-  "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "RoleForGitHubActions",
-      "Effect": "Allow",
-      "Principal": {
-        "Federated": "arn:aws:iam::643022902296:oidc-provider/token.actions.githubusercontent.com"
-      },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
           "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
           "token.actions.githubusercontent.com:sub": "repo:TobKed/github_actions_oidc:ref:refs/heads/master"
         }
-      }
+      },
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::643022902296:oidc-provider/token.actions.githubusercontent.com"
+      },
+      "Sid": "RoleForGitHubActions"
     }
-  ]
+  ],
+  "Version": "2012-10-17"
 }
