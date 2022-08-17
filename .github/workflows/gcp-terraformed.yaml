@@ -1,4 +1,4 @@
-name: GCP example workflow
+name: GCP (terraformed) example workflow
 
 on:
   workflow_dispatch:
@@ -6,13 +6,15 @@ on:
   push:
     branches:
       - master
+      # TODO remove before merge
+      - terraform-gcp
 
 env:
   GCP_PROJECT_ID: "ga-oidc-test-bis"
   GCP_PROJECT_NUMBER: "184480434073"
-  GCP_SERVICE_ACCOUNT: "my-service-account@ga-oidc-test-bis.iam.gserviceaccount.com"
-  GCP_IDENTITY_POOL: "github-actions-pool"
-  GCP_IDENTITY_POOL_PROVIDER: "github-actions-pool-provider"
+  GCP_SERVICE_ACCOUNT: "tf-github-actions-account@ga-oidc-test-bis.iam.gserviceaccount.com"
+  GCP_IDENTITY_POOL: "tf-github-actions-pool"
+  GCP_IDENTITY_POOL_PROVIDER: "tf-github-actions-pool-provider"
 
 permissions:
   id-token: write
