@@ -201,6 +201,7 @@ Read more about permissions:
 
  - [The GitHub Blog: GitHub Actions: Secure cloud deployments with OpenID Connect](https://github.blog/changelog/2021-10-27-github-actions-secure-cloud-deployments-with-openid-connect/)
  - [GitHub Docs - About security hardening with OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
+ - [The GitHub Blog: GitHub Actions: Securing OpenID Connect (OIDC) token permissions in reusable workflows](https://github.blog/changelog/2023-06-15-github-actions-securing-openid-connect-oidc-token-permissions-in-reusable-workflows/)
  - GCP:
    - [GitHub Docs - Configuring OpenID Connect in Google Cloud Platform](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-google-cloud-platform)
    - [Google Cloud - Workload identity federation](https://cloud.google.com/iam/docs/workload-identity-federation)
